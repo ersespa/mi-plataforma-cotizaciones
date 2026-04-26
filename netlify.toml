@@ -1,0 +1,12 @@
+# Netlify + Next.js
+# Referencia: https://github.com/netlify-templates/next-platform-starter/blob/main/netlify.toml
+#
+# Si el repo conectado en Netlify es la carpeta padre (no esta carpeta), en el panel:
+# Site settings → Build & deploy → Base directory → `erse-erse-electric`
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
