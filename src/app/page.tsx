@@ -1643,6 +1643,26 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="mt-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+            <button
+              type="button"
+              onClick={handleDownloadPdf}
+              className="w-full rounded-xl bg-gray-800 px-4 py-3 text-white shadow hover:bg-gray-700 sm:w-auto"
+            >
+              Descargar PDF
+            </button>
+
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-zinc-900 px-5 text-sm font-semibold text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+            >
+              {isSaving ? "Guardando..." : "Guardar en Supabase"}
+            </button>
+          </div>
+        </section>
+
         {FOOTER_DEVOLUCION_TEXT.trim().length > 0 && (
           <footer className="mt-8 rounded-2xl border border-gray-200 bg-white p-4 text-sm text-zinc-800 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-gray-100">
             <p className="text-center font-semibold leading-relaxed">{FOOTER_DEVOLUCION_TEXT}</p>
