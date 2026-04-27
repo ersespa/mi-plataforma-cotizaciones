@@ -129,6 +129,12 @@ function lineTotal(it: CotizacionItemPDF) {
   return Math.round(bruto * (1 - pct / 100));
 }
 
+function unitPriceNet(it: CotizacionItemPDF) {
+  const pct = Math.min(100, Math.max(0, it.descuento_pct));
+  if (pct >= 100) return 0;
+  return Math.max(0, Math.round(it.precio_unitario * (1 - pct / 100)));
+}
+
 /** Etiquetas a resaltar en negrita dentro de las notas */
 const NOTAS_BOLD_LABELS = ["Datos Bancarios", "Razón Social:", "RUT:", "Cta Cte:", "Banco:", "Correo:"] as const;
 const NOTAS_BOLD_LABEL_ANYWHERE_RE = new RegExp(`(${NOTAS_BOLD_LABELS.map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "gi");
@@ -460,6 +466,8 @@ function drawEmpresaHeaderLeft(
  * recuadro documento a la derecha misma altura que la banda del logo.
  */
 export async function generatePDF(data: CotizacionPDFInput): Promise<void> {
+  // Debug visual: fuerza un nombre distinto para evitar que el visor reabra un PDF viejo con el mismo nombre.
+  // (Se elimina cuando confirmemos que PRECIO refleja descuento.)
   const margin = 12;
   /** Encabezado un poco más arriba (hoja carta) */
   const headerBandTop = 8;
@@ -665,7 +673,7 @@ export async function generatePDF(data: CotizacionPDFInput): Promise<void> {
     it.codigo || "—",
     it.descripcion || "—",
     String(it.cantidad),
-    formatMontoVeltra(it.precio_unitario),
+    formatMontoVeltra(unitPriceNet(it)),
     formatMontoVeltra(lineTotal(it)),
   ]);
 
@@ -851,5 +859,6 @@ export async function generatePDF(data: CotizacionPDFInput): Promise<void> {
       .replace(/_+/g, "_")
       .replace(/^_+|_+$/g, "") || "sin_cliente";
 
-  doc.save(`Cotizacion_${safeNum}_${safeCliente}.pdf`);
+  const stamp = new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 12);
+  doc.save(`Cotizacion_${safeNum}_${safeCliente}_${stamp}.pdf`);
 }

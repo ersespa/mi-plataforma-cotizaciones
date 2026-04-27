@@ -2,13 +2,18 @@
   "name": "erse-erse-electric",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@netlify/identity": "^1.0.0",
     "@supabase/supabase-js": "^2.104.1",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.7",
