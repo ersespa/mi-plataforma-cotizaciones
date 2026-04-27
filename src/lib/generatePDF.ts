@@ -466,8 +466,6 @@ function drawEmpresaHeaderLeft(
  * recuadro documento a la derecha misma altura que la banda del logo.
  */
 export async function generatePDF(data: CotizacionPDFInput): Promise<void> {
-  // Debug visual: fuerza un nombre distinto para evitar que el visor reabra un PDF viejo con el mismo nombre.
-  // (Se elimina cuando confirmemos que PRECIO refleja descuento.)
   const margin = 12;
   /** Encabezado un poco más arriba (hoja carta) */
   const headerBandTop = 8;
@@ -859,6 +857,5 @@ export async function generatePDF(data: CotizacionPDFInput): Promise<void> {
       .replace(/_+/g, "_")
       .replace(/^_+|_+$/g, "") || "sin_cliente";
 
-  const stamp = new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 12);
-  doc.save(`Cotizacion_${safeNum}_${safeCliente}_${stamp}.pdf`);
+  doc.save(`Cotizacion_${safeNum}_${safeCliente}.pdf`);
 }

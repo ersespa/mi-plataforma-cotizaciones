@@ -10,3 +10,6 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # Desactiva Netlify Identity en el cliente: el formulario entra directo (sin pantalla de correo/contraseña).
+  # Para volver a exigir login en producción, borra esta línea o ponla en "false".
+  NEXT_PUBLIC_NETLIFY_IDENTITY_OFF = "true"
